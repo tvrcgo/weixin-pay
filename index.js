@@ -1,2 +1,6 @@
 
-exports = module.exports = require('./lib/wxpay');
+var WXPay = require('./lib/wxpay');
+
+WXPay.mix('Util', require('./lib/util'));
+
+module.exports = WXPay;

@@ -1,0 +1,33 @@
+{
+  "name": "weixin-pay",
+  "version": "1.0.1",
+  "description": "weixin payment",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "request": "^2.54.0",
+    "MD5": "^1.2.1",
+    "xml2js": "^0.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tvrcgo/weixin-pay.git"
+  },
+  "keywords": [
+    "weixin",
+    "wechat",
+    "payment"
+  ],
+  "author": "tvrcgo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tvrcgo/weixin-pay/issues"
+  },
+  "homepage": "https://github.com/tvrcgo/weixin-pay"
+}
