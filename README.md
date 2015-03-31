@@ -32,8 +32,6 @@ wxpay.createUnifiedOrder({
 });
 ```
 
----
-
 ### 公众号支付
 
 生成JS API支付参数，发给页面
@@ -62,9 +60,9 @@ WeixinJSBridge.invoke(
 });
 ```
 
----
+### 中间件
 
-添加了一个中间件，商户服务端处理微信的回调（express为例）
+商户服务端处理微信的回调（express为例）
 ```js
 var router = express.Router();
 var wxpay = require('weixin-pay');
