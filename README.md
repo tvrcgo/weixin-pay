@@ -32,7 +32,23 @@ wxpay.createUnifiedOrder({
 });
 ```
 
-### 公众号支付
+### 原生支付 (NATIVE)
+#### 模式一
+提供一个生成支付二维码链接的函数，把url生成二维码给用户扫。
+```js
+var url = wxpay.createMerchantPrepayUrl({ product_id: '123456' });
+```
+
+商户后台收到微信的回调之后，调用 createUnifiedOrder() 生成预支付交易单，将结果的XML数据返回给微信。
+
+[什么是模式一？](http://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4)
+
+#### 模式二
+直接调用 createUnifiedOrder() 函数生成预支付交易单，将结果中的 code_url 生成二维码给用户扫。
+
+[什么是模式二？]()
+
+### 公众号支付 (JS API)
 
 生成JS API支付参数，发给页面
 ```js
