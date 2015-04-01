@@ -90,6 +90,9 @@ router.use('/wxpay/native/callback', wxpay.useWXCallback(function(msg, req, res,
 
 // 支付结果异步通知
 router.use('/wxpay/notify', wxpay.useWXCallback(function(msg, req, res, next){
-
+	// 处理商户业务逻辑
+    
+    // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
+    res.success();
 }));
 ```
