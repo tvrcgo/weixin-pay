@@ -1,4 +1,6 @@
 # weixin-pay
+
+[![Join the chat at https://gitter.im/tvrcgo/weixin-pay](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tvrcgo/weixin-pay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 微信支付 for node.js
 
 [![npm version](https://badge.fury.io/js/weixin-pay.svg)](http://badge.fury.io/js/weixin-pay)
