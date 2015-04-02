@@ -1,6 +1,8 @@
 # weixin-pay
 微信支付 for node.js
 
+[![npm version](https://badge.fury.io/js/weixin-pay.svg)](http://badge.fury.io/js/weixin-pay)
+
 ## Installation
 ```
 npm install weixin-pay
@@ -32,9 +34,28 @@ wxpay.createUnifiedOrder({
 });
 ```
 
+查询订单
+```js
+// 通过微信订单号查
+wxpay.queryOrder({ transaction_id:"xxxxxx" }, function(err, order){
+	console.log(order);
+});
+
+// 通过商户订单号查
+wxpay.queryOrder({ out_trade_no:"xxxxxx" }, function(err, order){
+	console.log(order);
+});
+```
+
+关闭订单
+```js
+wxpay.closeOrder({ out_trade_no:"xxxxxx"}, function(err, result){
+	console.log(result);
+});
+```
+
 ### 原生支付 (NATIVE)
-#### 模式一
-提供一个生成支付二维码链接的函数，把url生成二维码给用户扫。
+**模式一**：提供一个生成支付二维码链接的函数，把url生成二维码给用户扫。
 ```js
 var url = wxpay.createMerchantPrepayUrl({ product_id: '123456' });
 ```
@@ -43,8 +64,7 @@ var url = wxpay.createMerchantPrepayUrl({ product_id: '123456' });
 
 [什么是模式一？](http://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4)
 
-#### 模式二
-直接调用 createUnifiedOrder() 函数生成预支付交易单，将结果中的 code_url 生成二维码给用户扫。
+**模式二**：直接调用 createUnifiedOrder() 函数生成预支付交易单，将结果中的 code_url 生成二维码给用户扫。
 
 [什么是模式二？]()
 
@@ -69,7 +89,7 @@ wxpay.getBrandWCPayRequestParams({
 网页调用参数（以ejs为例）
 ```js
 WeixinJSBridge.invoke(
-	"getBrandWCPayRequest", <%-JSON.Stringify(payargs)%>, function(res){
+	"getBrandWCPayRequest", <%-JSON.stringify(payargs)%>, function(res){
 		if(res.err_msg == "get_brand_wcpay_request:ok" ) {
     		// success
     	}
