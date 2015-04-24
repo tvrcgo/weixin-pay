@@ -17,8 +17,8 @@ var WXPay = require('weixin-pay');
 var wxpay = WXPay({
 	appid: 'xxxxxxxx',
 	mch_id: '1234567890',
-	partner_key: 'xxxxxxxxxxxxxxxxx',
-	pfx: fs.readFileSync('./wxpay_cert.p12'),
+	partner_key: 'xxxxxxxxxxxxxxxxx', //微信商户平台API密钥
+	pfx: fs.readFileSync('./wxpay_cert.p12'), //微信商户平台证书
 });
 
 wxpay.createUnifiedOrder({
@@ -55,7 +55,11 @@ wxpay.closeOrder({ out_trade_no:"xxxxxx"}, function(err, result){
 ```
 
 ### 原生支付 (NATIVE)
-**模式一**：提供一个生成支付二维码链接的函数，把url生成二维码给用户扫。
+
+#### 模式一
+
+提供一个生成支付二维码链接的函数，把url生成二维码给用户扫。
+
 ```js
 var url = wxpay.createMerchantPrepayUrl({ product_id: '123456' });
 ```
@@ -64,9 +68,11 @@ var url = wxpay.createMerchantPrepayUrl({ product_id: '123456' });
 
 [什么是模式一？](http://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4)
 
-**模式二**：直接调用 createUnifiedOrder() 函数生成预支付交易单，将结果中的 code_url 生成二维码给用户扫。
+#### 模式二
 
-[什么是模式二？]()
+直接调用 createUnifiedOrder() 函数生成预支付交易单，将结果中的 code_url 生成二维码给用户扫。
+
+[什么是模式二？](http://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_5)
 
 ### 公众号支付 (JS API)
 
