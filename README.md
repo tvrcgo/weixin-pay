@@ -55,14 +55,15 @@ wxpay.closeOrder({ out_trade_no:"xxxxxx"}, function(err, result){
 ```
 退款接口
 ```js
-let  params = {
+var params = {
 	appid: 'xxxxxxxx',
 	mch_id: '1234567890',
     op_user_id: '商户号即可',
     out_refund_no: '20140703'+Math.random().toString().substr(2, 10),
     total_fee: '1', //原支付金额
     refund_fee: '1', //退款金额
-    transaction_id: '微信订单号' }
+    transaction_id: '微信订单号'
+};
 
 wxpay.refund(params, function(err, result){
     console.log('refund', arguments);
@@ -121,16 +122,6 @@ WeixinJSBridge.invoke(
 
 商户服务端处理微信的回调（express为例）
 ```js
-var router = express.Router();
-var WXPay = require('weixin-pay');
-
-var wxpay = WXPay({
-	appid: 'xxxxxxxx',
-	mch_id: '1234567890',
-	partner_key: 'xxxxxxxxxxxxxxxxx', //微信商户平台API密钥
-	pfx: fs.readFileSync('./wxpay_cert.p12'), //微信商户平台证书
-});
-
 // 原生支付回调
 router.use('/wxpay/native/callback', wxpay.useWXCallback(function(msg, req, res, next){
 	// msg: 微信回调发送的数据
@@ -139,7 +130,7 @@ router.use('/wxpay/native/callback', wxpay.useWXCallback(function(msg, req, res,
 // 支付结果异步通知
 router.use('/wxpay/notify', wxpay.useWXCallback(function(msg, req, res, next){
 	// 处理商户业务逻辑
-    
+
     // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
     res.success();
 }));
