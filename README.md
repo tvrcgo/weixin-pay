@@ -135,3 +135,19 @@ router.use('/wxpay/notify', wxpay.useWXCallback(function(msg, req, res, next){
     res.success();
 }));
 ```
+
+
+### 企业支付
+
+```js
+wxpay.transfer({
+	partner_trade_no: '3123123123', // 订单号
+	openid: 'openid',
+	amount: 100, // 分为单位
+	desc: '描述',
+	spbill_create_ip: '192.168.2.210', // ip,
+	check_name: 'NO_CHECK', //默认为 NO_CHECK, 可不填
+}, function(err, result){
+	console.log('transfer', arguments);
+});
+```
