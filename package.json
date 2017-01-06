@@ -9,7 +9,8 @@
   "dependencies": {
     "request": "^2.54.0",
     "MD5": "^1.2.1",
-    "xml2js": "^0.4.6"
+    "xml2js": "^0.4.6",
+    "moment": "^2.17.1"
   },
   "devDependencies": {},
   "scripts": {
