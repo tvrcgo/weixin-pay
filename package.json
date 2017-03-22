@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "request": "^2.54.0",
-    "MD5": "^1.2.1",
+    "md5": "^2.2.1",
     "xml2js": "^0.4.6"
   },
   "devDependencies": {},
