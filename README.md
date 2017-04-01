@@ -120,18 +120,33 @@ WeixinJSBridge.invoke(
 
 ### 中间件
 
-商户服务端处理微信的回调（express为例）
+商户服务端处理微信的回调
+
+Express
+
 ```js
 // 原生支付回调
-router.use('/wxpay/native/callback', wxpay.useWXCallback(function(msg, req, res, next){
+app.use('/wxpay/native/callback', wxpay.useWXCallback(function(msg, req, res, next){
 	// msg: 微信回调发送的数据
 }));
 
 // 支付结果异步通知
-router.use('/wxpay/notify', wxpay.useWXCallback(function(msg, req, res, next){
+app.use('/wxpay/notify', wxpay.useWXCallback(function(msg, req, res, next){
 	// 处理商户业务逻辑
 
     // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
     res.success();
+}));
+```
+
+Koa
+
+```js
+app.use(wxpay.useWXCallbackForKoa('/pay/wx/notifyUrl', function (msg, req, res) {
+
+	// 处理商户业务逻辑
+
+	// res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
+	res.success();
 }));
 ```
