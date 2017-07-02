@@ -30,3 +30,5 @@ node_modules
 *.p12
 test
 .idea
+coverage/
+cov/

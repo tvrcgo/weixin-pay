@@ -4,7 +4,8 @@
   "description": "weixin payment",
   "main": "index.js",
   "scripts": {
-    "test": "loop test"
+    "test": "loop test",
+    "cov": "loop cov"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -12,7 +13,7 @@
     "xml2json": "^0.11.0"
   },
   "devDependencies": {
-    "webpack-compile-loop": "^0.4.2"
+    "webpack-compile-loop": "^0.4.4"
   },
   "repository": {
     "type": "git",
