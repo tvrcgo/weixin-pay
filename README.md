@@ -123,12 +123,12 @@ WeixinJSBridge.invoke(
 商户服务端处理微信的回调
 ```js
 // 原生支付回调
-wxpay.useWXCallback((msg, req, res, next) => {
+wxpay.useWXCallback((msg, req, res) => {
   // msg: 微信回调发送的数据
 })(req, res);
   
 // 支付结果异步通知
-wxpay.useWXCallback((msg, req, res, next) => {
+wxpay.useWXCallback((msg, req, res) => {
   // 处理商户业务逻辑
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
   res.success();
