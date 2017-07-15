@@ -118,6 +118,23 @@ WeixinJSBridge.invoke(
 });
 ```
 
+### 支付状态回调处理
+
+商户服务端处理微信的回调
+```js
+// 原生支付回调
+wxpay.useWXCallback((msg, req, res, next) => {
+  // msg: 微信回调发送的数据
+})(req, res);
+  
+// 支付结果异步通知
+wxpay.useWXCallback((msg, req, res, next) => {
+  // 处理商户业务逻辑
+  // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
+  res.success();
+})(req, res);
+```
+
 ### 中间件
 
 商户服务端处理微信的回调（express为例）
