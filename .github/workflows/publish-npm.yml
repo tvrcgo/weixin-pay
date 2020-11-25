@@ -1,0 +1,24 @@
+
+name: Publish npm
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-18.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: Publish npm
+        run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
