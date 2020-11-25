@@ -3,7 +3,10 @@ const axios = require('axios')
 const { md5, nonce, xml2json, json2xml } = require('./helper')
 
 class WeixinPayment {
-  constructor(opts = {}) {
+  $opts: any
+  $req: any
+
+  constructor(opts: any = {}) {
     this.$opts = opts
     this.$req = axios.create({
       baseURL: 'https://api.mch.weixin.qq.com',
@@ -62,4 +65,4 @@ class WeixinPayment {
 
 }
 
-module.exports = WeixinPayment
+export default WeixinPayment

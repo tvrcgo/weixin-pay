@@ -1,13 +1,13 @@
 const crypto = require('crypto')
-const json2xml = require('json2xml')
-const xml2json = require('xml2json')
+const _json2xml = require('json2xml')
+const _xml2json = require('xml2json')
 
-exports.md5 = (str) => {
+export const md5 = (str) => {
 	const hash = crypto.createHash('md5')
 	return hash.update(str).digest('hex')
 }
 
-exports.nonce = (length = 32) => {
+export const nonce = (length = 32) => {
 	var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 	var maxPos = chars.length
 	var nonceStr = ""
@@ -17,10 +17,10 @@ exports.nonce = (length = 32) => {
 	return nonceStr
 }
 
-exports.json2xml = (json) => json2xml({ xml: json }, { header: true })
+export const json2xml = (json) => _json2xml({ xml: json }, { header: true })
 
-exports.xml2json = (xml) => {
-	const text = xml2json.toJson(xml)
+export const xml2json = (xml) => {
+	const text = _xml2json.toJson(xml)
 	const json = JSON.parse(text)
 	return json.xml
 }
