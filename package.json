@@ -2,7 +2,7 @@
   "name": "weixin-pay",
   "version": "1.1.7",
   "description": "weixin payment",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "loop test",
     "cov": "loop cov"
