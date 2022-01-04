@@ -17,8 +17,17 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+
       - name: Publish npm
         run: |
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+
+      - name: Create release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
