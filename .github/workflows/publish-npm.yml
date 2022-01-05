@@ -25,9 +25,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
       - name: Create release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+          draft: true
+          prerelease: true
