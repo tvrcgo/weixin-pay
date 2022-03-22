@@ -20,8 +20,9 @@ class WeixinPayment {
   sign(params) {
     const qs = Object.keys(params)
       .filter(key => key && params[key] && !['sign'].includes(key))
+      .map(key => `${key}=${params[key]}`)
       .sort()
-      .map(key => `${key}=${params[key]}`).join('&')
+      .join('&')
     return md5(qs).toUpperCase()
   }
 
