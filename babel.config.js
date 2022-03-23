@@ -7,6 +7,7 @@ module.exports = {
         }
       }
     ],
-    '@babel/preset-typescript'
+    '@babel/preset-typescript',
+    'power-assert'
   ],
 }

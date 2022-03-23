@@ -4,6 +4,7 @@
     "module": "commonjs",
     "strictNullChecks": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "rootDir": "src",
     "outDir": "lib"
   },
