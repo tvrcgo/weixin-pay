@@ -1,2 +1,2 @@
 
-export default require('./payment')
+export { default } from './payment'

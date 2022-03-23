@@ -1,68 +1,120 @@
-const https = require('https')
-const axios = require('axios')
-const { md5, nonce, xml2json, json2xml } = require('./helper')
+
+import crypto from 'crypto'
+import fs from 'fs'
+import axios from 'axios'
+import { nonce } from './utils'
 
 class WeixinPayment {
-  $opts: any
-  $req: any
+  _client: any
+  _params: any
 
-  constructor(opts: any = {}) {
-    this.$opts = opts
-    this.$req = axios.create({
-      baseURL: 'https://api.mch.weixin.qq.com',
-      timeout: 1000*5,
-      httpsAgent: new https.Agent({
-        pfx: opts.pfx
-      })
+  constructor(params: any) {
+    const {
+      baseUrl,
+      privatePem,
+    } = params
+    this._params = {
+      ...params,
+      privateKey: fs.readFileSync(privatePem, "utf8")
+    }
+    this._client = axios.create({
+      baseURL: baseUrl || 'https://api.mch.weixin.qq.com',
+      timeout: 5000,
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
   }
 
-  sign(params) {
-    const qs = Object.keys(params)
-      .filter(key => key && params[key] && !['sign'].includes(key))
-      .map(key => `${key}=${params[key]}`)
-      .sort()
-      .join('&')
-    return md5(qs).toUpperCase()
+  buildAuthHeader(params: any) {
+    const {
+      method,
+      url,
+      body
+    } = params
+    // sign
+    const time = Math.floor(Date.now() / 1000)
+    const nonceStr = nonce()
+    const message = [
+      method,
+      url,
+      time,
+      nonceStr,
+      body
+    ].map(v => v + '\n').join('')
+    const signature = crypto.createHmac('sha256', this._params.privateKey).update(message).digest('base64')
+    // build header
+    const authParams = {
+      mchid: this._params.mchId,
+      nonce_str: nonceStr,
+      signature: signature,
+      timestamp: time,
+      serial_no: this._params.serialNo
+    }
+    return {
+      Authorization: `WECHATPAY2-SHA256-RSA2048 ${Object.entries(authParams).map(([k, v]) => `${k}="${v}"`).join(',')}`
+    }
   }
 
-  req(url, params) {
-    const { appid, mch_id } = this.$opts
-    Object.assign(params, {
-      appid,
-      mch_id,
-      nonce_str: nonce()
+  async request(method, url, body) {
+    const authHeader = this.buildAuthHeader({
+      method,
+      url,
+      body
     })
-    params.sign = this.sign(params)
-    const body = json2xml(params, { header: false })
-    return this.$req
-      .post(url, body)
-      .then(ret => xml2json(ret.data))
+    return this._client.request({
+      method,
+      url,
+      data: body,
+      headers: {
+        ...authHeader,
+      }
+    }).then(res => ({
+      status: res.status,
+      data: res.data
+    })).catch(err => ({
+      status: err.response.status,
+      data: err.response.data
+    }))
   }
 
-  createOrder(params = {}) {
-    return this.req('/pay/unifiedorder', params)
+  // 签名验证
+  async certificates() {
+    return this.request('GET', '/v3/certificates', '')
   }
 
-  queryOrder(params = {}) {
-    return this.req('/pay/orderquery', params)
-  }
+  // 创建预支付交易单
+  async createTransaction() {}
 
-  closeOrder(params = {}) {
-    return this.req('/pay/closeorder', params)
-  }
+  // 查询交易单
+  async queryTransaction() {}
 
-  reverseOrder(params = {}) {
-    return this.req('/secapi/pay/reverse', params)
-  }
+  // 关闭交易单
+  async closeTransaction() {}
 
-  refund(params = {}) {
-    return this.req('/secapi/pay/refund', params)
-  }
+  // 调起支付
+  async invokePayment() {}
 
-  queryRefund(params = {}) {
-    return this.req('/pay/refundquery', params)
-  }
+  // 通知支付结果
+  async notifyPaymentResult() {}
+
+  // 申请退款
+  async applyRefund() {}
+
+  // 查询单笔退款
+  async queryRefund() {}
+
+  // 通知退款结果
+  async notifyRefundResult() {}
+
+  // 申请交易账单
+  async applyTradeBill() {}
+
+  // 申请资金账单
+  async applyFundflowBill() {}
+
+  // 下载账单
+  async downloadBill() {}
 
 }
 
