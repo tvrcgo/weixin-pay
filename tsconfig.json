@@ -5,6 +5,7 @@
     "strictNullChecks": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "removeComments": true,
     "rootDir": "src",
     "outDir": "lib"
   },

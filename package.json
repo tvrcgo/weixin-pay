@@ -4,7 +4,6 @@
   "description": "weixin payment",
   "main": "lib/index.js",
   "scripts": {
-    "dev": "tsc --watch",
     "test": "jest",
     "lint": "./node_modules/.bin/eslint --fix src",
     "clean": "rimraf lib",

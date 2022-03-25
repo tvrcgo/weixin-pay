@@ -1,23 +1,9 @@
 import crypto from 'crypto'
-import WeixinRequest, { WeixinRequestParams } from './request'
-
-interface WeixinNoticeResponse {
-  id: string
-  create_time: string
-  resource_type: string
-  event_type: string
-  summary: string
-  resource: {
-    original_type: string
-    algorithm: string
-    ciphertext: string
-    associated_data: string
-    nonce: string
-  }
-}
+import WeixinRequest, { WeixinRequestOptions } from './request'
+import { WeixinNoticeResponse } from './typings'
 
 class WeixinPayment extends WeixinRequest {
-  constructor(params: WeixinRequestParams) {
+  constructor(params: WeixinRequestOptions) {
     super(params)
   }
 
@@ -60,8 +46,8 @@ class WeixinPayment extends WeixinRequest {
 
     try {
       return JSON.parse(decoded)
-    } catch (e) {
-      return { error: e.message }
+    } catch (err) {
+      return { error: err.message }
     }
   }
 
