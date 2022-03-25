@@ -96,10 +96,18 @@ class WeixinRequest {
     }).then((res: AxiosResponse) => ({
       status: res.status,
       data: res.data
-    })).catch((err: AxiosError) => ({
-      status: err.response && err.response.status,
-      data: err.response && err.response.data
-    }))
+    })).catch((err: AxiosError) => {
+      if (err && err.response) {
+        return {
+          status: err.response.status,
+          data: err.response.data
+        }
+      } else {
+        return {
+          error: err.message || err.code
+        }
+      }
+    })
   }
 }
 

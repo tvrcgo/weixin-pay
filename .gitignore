@@ -10,3 +10,4 @@ cert/
 *.p12
 *.pem
 *.crt
+.idea/
