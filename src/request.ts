@@ -37,6 +37,18 @@ class WeixinRequest {
         'Accept': 'application/json'
       }
     })
+    // intercept response
+    this._client.interceptors.response.use((res: AxiosResponse) => {
+      return res
+    }, (err: AxiosError) => {
+      if (err && err.response) {
+        return err.response
+      } else {
+        return {
+          error: err.message || err.code
+        }
+      }
+    })
   }
 
   get params() {
@@ -93,20 +105,6 @@ class WeixinRequest {
       url,
       data: body,
       headers: headers
-    }).then((res: AxiosResponse) => ({
-      status: res.status,
-      data: res.data
-    })).catch((err: AxiosError) => {
-      if (err && err.response) {
-        return {
-          status: err.response.status,
-          data: err.response.data
-        }
-      } else {
-        return {
-          error: err.message || err.code
-        }
-      }
     })
   }
 }

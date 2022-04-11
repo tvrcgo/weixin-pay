@@ -3,8 +3,8 @@ import WeixinRequest, { WeixinRequestOptions } from './request'
 import { WeixinNoticeResponse } from './typings'
 
 class WeixinPayment extends WeixinRequest {
-  constructor(params: WeixinRequestOptions) {
-    super(params)
+  constructor(opts: WeixinRequestOptions) {
+    super(opts)
   }
 
   // 创建交易单 (JSAPI/H5/App/Native)
@@ -48,14 +48,6 @@ class WeixinPayment extends WeixinRequest {
       return JSON.parse(decoded)
     } catch (err) {
       return { error: err.message }
-    }
-  }
-
-  // 响应平台通知
-  async processNotice() {
-    return {
-      code: 'SUCCESS',
-      message: '成功'
     }
   }
 
