@@ -37,6 +37,10 @@ class WeixinRequest {
         'Accept': 'application/json'
       }
     })
+    // intercept request
+    this._client.interceptors.request.use((config: AxiosRequestConfig) => {
+      return config
+    })
     // intercept response
     this._client.interceptors.response.use((res: AxiosResponse) => {
       return res
@@ -86,25 +90,19 @@ class WeixinRequest {
   }
 
   async request(method: string, url: string, body: any = '', headers: any = {}) {
-    // intercept request
-    this._client.interceptors.request.use((config: AxiosRequestConfig) => {
-      // add Authorization header
-      config.headers = {
-        ...config.headers,
+    // make request
+    return this._client.request({
+      method,
+      url,
+      data: body,
+      headers: {
+        ...headers,
         ...this.buildAuthHeader({
           method,
           url,
           body: JSON.stringify(body)
         })
       }
-      return config
-    })
-    // make request
-    return this._client.request({
-      method,
-      url,
-      data: body,
-      headers: headers
     })
   }
 }
