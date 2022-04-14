@@ -10,7 +10,6 @@ jobs:
   publish-npm:
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
-
     steps:
       - uses: actions/checkout@main
       - uses: actions/setup-node@v1
@@ -20,13 +19,14 @@ jobs:
 
       - name: Publish npm
         run: |
+          npm install
           npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           draft: true
-          prerelease: true
+          prerelease: false
