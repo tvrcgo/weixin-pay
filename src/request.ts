@@ -21,12 +21,12 @@ class WeixinRequest {
   private _client: AxiosInstance
   private _params: WeixinRequestParams
 
-  constructor(params: WeixinRequestOptions) {
+  constructor(opts: WeixinRequestOptions) {
     const {
       privateKeyPath
-    } = params
+    } = opts
     this._params = {
-      ...params,
+      ...opts,
       privateKey: fs.readFileSync(privateKeyPath, "utf8")
     }
     this._client = axios.create({
