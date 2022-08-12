@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { md5, nonce } from '../src/utils'
+import { md5, nonce } from '@/utils'
 
 describe('utils', () => {
 

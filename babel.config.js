@@ -10,4 +10,12 @@ module.exports = {
     '@babel/preset-typescript',
     'power-assert'
   ],
+  plugins: [
+    ['module-resolver', {
+      root: ['.'],
+      alias: {
+        '@': './src'
+      }
+    }]
+  ]
 }

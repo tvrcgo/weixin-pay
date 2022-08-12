@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { resolve } from 'path'
-import { Payment } from '../src/index'
+import { Payment } from '@/index'
 
 describe('payment', () => {
   const payment = new Payment({
