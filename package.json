@@ -7,11 +7,12 @@
     "test": "jest",
     "lint": "./node_modules/.bin/eslint --fix src",
     "clean": "rimraf lib",
-    "build": "npm run clean && tsc",
-    "prepublishOnly": "npm run build"
+    "build": "tsc",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "files": [
-    "lib"
+    "lib",
+    "types"
   ],
   "jest": {
     "clearMocks": true,
