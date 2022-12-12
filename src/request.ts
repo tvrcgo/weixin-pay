@@ -2,20 +2,7 @@ import crypto from 'crypto'
 import fs from 'fs'
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { nonce } from './utils'
-
-interface WeixinRequestOptions {
-  appId: number
-  mchId: number
-  serialNo: string
-  privateKeyPath: string
-  publicCertPath?: string
-  apiKey: string
-}
-
-interface WeixinRequestParams extends WeixinRequestOptions {
-  privateKey: string
-  publicKey?: string
-}
+import { WeixinRequestOptions, WeixinRequestParams } from '../types/request'
 
 class WeixinRequest {
   private _client: AxiosInstance
