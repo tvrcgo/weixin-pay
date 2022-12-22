@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import fs from 'fs'
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { nonce } from './utils'
-import { WeixinClientOptions, WeixinClientParams } from '../types/client'
+import '../types/client'
 
 class WeixinClient {
   private _client: AxiosInstance
