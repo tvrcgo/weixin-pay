@@ -2,13 +2,13 @@ import crypto from 'crypto'
 import fs from 'fs'
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { nonce } from './utils'
-import { WeixinRequestOptions, WeixinRequestParams } from '../types/request'
+import { WeixinClientOptions, WeixinClientParams } from '../types/client'
 
-class WeixinRequest {
+class WeixinClient {
   private _client: AxiosInstance
-  private _params: WeixinRequestParams
+  private _params: WeixinClientParams
 
-  constructor(opts: WeixinRequestOptions) {
+  constructor(opts: WeixinClientOptions) {
     const {
       privateKeyPath
     } = opts
@@ -94,7 +94,7 @@ class WeixinRequest {
   }
 }
 
-export default WeixinRequest
+export default WeixinClient
 export {
-  WeixinRequestOptions
+  WeixinClientOptions
 }

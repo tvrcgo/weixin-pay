@@ -1,9 +1,9 @@
 import crypto from 'crypto'
-import WeixinRequest, { WeixinRequestOptions } from './request'
+import WeixinClient, { WeixinClientOptions } from './client'
 import { WeixinNoticeResponse } from '../types/payment'
 
-class WeixinPayment extends WeixinRequest {
-  constructor(opts: WeixinRequestOptions) {
+class WeixinPayment extends WeixinClient {
+  constructor(opts: WeixinClientOptions) {
     super(opts)
   }
 

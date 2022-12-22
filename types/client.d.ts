@@ -1,5 +1,5 @@
 
-export interface WeixinRequestOptions {
+export interface WeixinClientOptions {
   appId: number
   mchId: number
   serialNo: string
@@ -8,7 +8,7 @@ export interface WeixinRequestOptions {
   apiKey: string
 }
 
-export interface WeixinRequestParams extends WeixinRequestOptions {
+export interface WeixinClientParams extends WeixinClientOptions {
   privateKey: string
   publicKey?: string
 }
