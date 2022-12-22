@@ -11,3 +11,4 @@ cert/
 *.pem
 *.crt
 .idea/
+.env

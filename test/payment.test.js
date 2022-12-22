@@ -2,13 +2,15 @@ import assert from 'assert'
 import { resolve } from 'path'
 import { Payment } from '@/index'
 
+require('dotenv').config()
+
 describe('payment', () => {
   const payment = new Payment({
-    appId: 'wx00000', // 公众号ID
-    mchId: '1000010', // 商户ID
-    serialNo: 'xxx', // 商户API证书序列号
+    appId: process.env.WX_APP_ID, // 公众号ID
+    mchId: process.env.WX_MCH_ID, // 商户ID
+    serialNo: process.env.WX_SERIAL_NO, // 商户API证书序列号
     privateKeyPath: resolve(__dirname, './cert/apiclient_key.pem'), // 商户API私钥
-    apiKey: 'xxx', // API v3 密钥
+    apiKey: process.env.WX_API_KEY, // API v3 密钥
   })
 
   it('get certificates', async () => {

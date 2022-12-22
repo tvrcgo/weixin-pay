@@ -32,6 +32,7 @@
     "babel-jest": "^27.5.1",
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-preset-power-assert": "^3.0.0",
+    "dotenv": "^16.0.3",
     "eslint": "^7.14.0",
     "jest": "^27.5.1",
     "power-assert": "^1.6.1",
