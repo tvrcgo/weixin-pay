@@ -95,6 +95,3 @@ class WeixinClient {
 }
 
 export default WeixinClient
-export {
-  WeixinClientOptions
-}

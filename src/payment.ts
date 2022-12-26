@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import WeixinClient, { WeixinClientOptions } from './client'
+import WeixinClient from './client'
 import '../types/payment'
 
 class WeixinPayment extends WeixinClient {
