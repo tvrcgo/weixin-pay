@@ -5,7 +5,7 @@ import { nonce } from './utils'
 import {
   WeixinClientParams,
   WeixinClientOptions
-} from '../types/client'
+} from '../types'
 
 class WeixinClient {
   private _client: AxiosInstance
