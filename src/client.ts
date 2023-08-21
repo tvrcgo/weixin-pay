@@ -65,7 +65,7 @@ class WeixinClient {
       nonceStr,
       body
     ].map(v => v + '\n').join('')
-    const signature = crypto.createSign('RSA-SHA256').update(message).sign(this._params.privateKey, 'base64')
+    const signature = this.sign(message)
     // authorization header
     const authParams = {
       mchid: this._params.mchId,
@@ -77,6 +77,10 @@ class WeixinClient {
     return {
       Authorization: `WECHATPAY2-SHA256-RSA2048 ${Object.entries(authParams).map(([k, v]) => `${k}="${v}"`).join(',')}`
     }
+  }
+
+  sign(message) {
+    return crypto.createSign('RSA-SHA256').update(message).sign(this._params.privateKey, 'base64')
   }
 
   async request(method: string, url: string, body: any = '', headers: any = {}) {

@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import WeixinClient from './client'
+import { nonce } from './utils'
 import {
   WeixinClientOptions,
   WeixinNoticeResponse
@@ -11,7 +12,7 @@ class WeixinPayment extends WeixinClient {
   }
 
   // 创建交易单 (JSAPI/H5/App/Native)
-  async makeTransaction({ type, params }) {
+  async makeTransaction(type, params) {
     params = {
       ...params,
       appid: this.params.appId,
@@ -33,7 +34,35 @@ class WeixinPayment extends WeixinClient {
   }
 
   // 调起支付
-  async invokePayment() {}
+  invokePayment(type, params) {
+    // 小程序
+    if (type === 'mp') {
+      const { prepay_id } = params
+      const timeStamp = Math.floor(Date.now() / 1000)
+      const nonceStr = nonce()
+      const pkgstr = `prepay_id=${prepay_id}`
+      const message = [
+        this.params.appId,
+        timeStamp,
+        nonceStr,
+        pkgstr,
+      ].map(v => v + '\n').join('')
+      const sign = this.sign(message)
+
+      return {
+        appId: this.params.appId,
+        timeStamp,
+        nonceStr,
+        package: pkgstr,
+        signType: 'RSA',
+        paySign: sign,
+      }
+    }
+
+    return {
+      error: 'Unknown payment type'
+    }
+  }
 
   // 微信平台通知解密
   async decipherWeixinNotice(res: WeixinNoticeResponse) {
