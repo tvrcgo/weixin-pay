@@ -51,7 +51,7 @@ class WeixinPayment extends WeixinClient {
 
       return {
         appId: this.params.appId,
-        timeStamp,
+        timeStamp: '' + timeStamp,
         nonceStr,
         package: pkgstr,
         signType: 'RSA',
