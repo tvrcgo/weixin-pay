@@ -66,18 +66,18 @@ class WeixinPayment extends WeixinClient {
 
   // 微信平台通知解密
   async decipherWeixinNotice(res: WeixinNoticeResponse) {
-    const ciphertext = Buffer.from(res.resource.ciphertext, 'base64')
+    const ciphertext = Buffer.from(decodeURIComponent(res.resource.ciphertext), 'base64')
     const data = ciphertext.slice(0, ciphertext.length - 16)
     const authTag = ciphertext.slice(ciphertext.length - 16)
 
     const decipher = crypto.createDecipheriv('aes-256-gcm', this.params.apiKey, res.resource.nonce)
     decipher.setAuthTag(authTag)
     decipher.setAAD(Buffer.from(res.resource.associated_data))
-    const decoded = decipher.update(data, undefined, 'utf8')
-    decipher.final()
+    let decrypted = decipher.update(data, undefined, 'utf8')
+    decrypted += decipher.final()
 
     try {
-      return JSON.parse(decoded)
+      return JSON.parse(decrypted)
     } catch (err) {
       return { error: err.message }
     }
