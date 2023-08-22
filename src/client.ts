@@ -63,7 +63,7 @@ class WeixinClient {
       url,
       time,
       nonceStr,
-      body
+      (body ? JSON.stringify(body) : '')
     ].map(v => v + '\n').join('')
     const signature = this.sign(message)
     // authorization header
@@ -94,7 +94,7 @@ class WeixinClient {
         ...this.buildAuthHeader({
           method,
           url,
-          body: JSON.stringify(body)
+          body
         })
       }
     })
