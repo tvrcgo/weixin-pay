@@ -12,32 +12,28 @@ describe('payment', () => {
     privateKeyPath: resolve(__dirname, './cert/apiclient_key.pem'), // 商户API私钥
     apiKey: process.env.WX_API_KEY, // API v3 密钥
   })
+  const openid = process.env.WX_OPENID
 
   it('get certificates', async () => {
     const res = await payment.certificates()
     assert(res.status === 200)
   })
 
-  it('make h5 transaction', async () => {
-    const res = await payment.makeTransaction({
-      type: 'h5',
-      params: {
-        description: '小玩具 H5',
-        out_trade_no: '123456789',
-        notify_url: 'https://monitor-hook.fc.lazada.cn/itrace',
-        amount: {
-          total: 1,
-          currency: 'CNY'
-        },
-        scene_info: {
-          payer_client_ip: "127.0.0.1",
-          h5_info: {
-            type: "Wap"
-          }
-        }
+  it('make transaction', async () => {
+    const res = await payment.makeTransaction('jsapi', {
+      description: '娃哈哈',
+      out_trade_no: ('' + Date.now()).replace(/\./, ''),
+      notify_url: 'https://api.tvrcgo.cn/v1/weixin/pay_notify',
+      amount: {
+        total: 1,
+        currency: 'CNY'
+      },
+      payer: {
+        openid: openid,
       }
     })
     assert(res.status === 200)
+    assert(res.data.prepay_id)
   })
 
 })

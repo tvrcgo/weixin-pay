@@ -65,7 +65,7 @@ class WeixinClient {
       nonceStr,
       (body ? JSON.stringify(body) : '')
     ].map(v => v + '\n').join('')
-    const signature = this.sign(message)
+    const signature = this.RSASign(message)
     // authorization header
     const authParams = {
       mchid: this._params.mchId,
@@ -79,7 +79,7 @@ class WeixinClient {
     }
   }
 
-  sign(message) {
+  RSASign(message) {
     return crypto.createSign('RSA-SHA256').update(message).sign(this._params.privateKey, 'base64')
   }
 

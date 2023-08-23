@@ -33,8 +33,8 @@ class WeixinPayment extends WeixinClient {
     })
   }
 
-  // 调起支付
-  invokePayment(type, params) {
+  // 生成发起支付所需的参数
+  generatePaymentParams(type, params) {
     // 小程序
     if (type === 'mp') {
       const { prepay_id } = params
@@ -47,7 +47,7 @@ class WeixinPayment extends WeixinClient {
         nonceStr,
         pkgstr,
       ].map(v => v + '\n').join('')
-      const sign = this.sign(message)
+      const sign = this.RSASign(message)
 
       return {
         appId: this.params.appId,
