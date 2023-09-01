@@ -3,7 +3,8 @@ import WeixinClient from './client'
 import { nonce } from './utils'
 import {
   WeixinClientOptions,
-  WeixinNoticeResponse
+  WeixinNoticeResponse,
+  WeixinPaymentType
 } from '../types'
 
 class WeixinPayment extends WeixinClient {
@@ -12,31 +13,20 @@ class WeixinPayment extends WeixinClient {
   }
 
   // 创建交易单 (JSAPI/H5/App/Native)
-  async makeTransaction(type, params) {
+  async invokePayment(type: WeixinPaymentType, params: any) {
     params = {
       ...params,
       appid: this.params.appId,
       mchid: this.params.mchId
     }
-    return this.request('POST', `/v3/pay/transactions/${type}`, params)
+    const { data } = await this.request('POST', `/v3/pay/transactions/${type}`, params)
+    return this.buildParams(type, data)
   }
 
-  // 查询交易
-  async queryTransaction(txnId) {
-    return this.request('GET', `/v3/pay/transactions/id/${txnId}?mchid=${this.params.mchId}`)
-  }
-
-  // 关闭交易
-  async closeTransaction(outTradeNo) {
-    return this.request('POST', `/v3/pay/transactions/out-trade-no/${outTradeNo}/close`, {
-      mchid: this.params.mchId
-    })
-  }
-
-  // 生成发起支付所需的参数
-  generatePaymentParams(type, params) {
-    // 小程序
-    if (type === 'mp') {
+  // 构造发起支付所需的参数
+  private buildParams(type: WeixinPaymentType, params: any) {
+    // JSAPI/小程序
+    if (type === 'jsapi') {
       const { prepay_id } = params
       const timeStamp = Math.floor(Date.now() / 1000)
       const nonceStr = nonce()
@@ -50,18 +40,42 @@ class WeixinPayment extends WeixinClient {
       const sign = this.RSASign(message)
 
       return {
-        appId: this.params.appId,
-        timeStamp: '' + timeStamp,
-        nonceStr,
-        package: pkgstr,
-        signType: 'RSA',
-        paySign: sign,
+        ok: 1,
+        params: {
+          appId: this.params.appId,
+          timeStamp: '' + timeStamp,
+          nonceStr,
+          package: pkgstr,
+          signType: 'RSA',
+          paySign: sign,
+        }
+      }
+    }
+
+    // H5
+    if (type === 'h5') {
+      return {
+        ok: 1,
+        params
       }
     }
 
     return {
+      ok: 0,
       error: 'Unknown payment type'
     }
+  }
+
+  // 查询交易
+  async queryTransaction(txnId) {
+    return this.request('GET', `/v3/pay/transactions/id/${txnId}?mchid=${this.params.mchId}`)
+  }
+
+  // 关闭交易
+  async closeTransaction(outTradeNo) {
+    return this.request('POST', `/v3/pay/transactions/out-trade-no/${outTradeNo}/close`, {
+      mchid: this.params.mchId
+    })
   }
 
   // 微信平台通知解密

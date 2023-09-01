@@ -14,6 +14,9 @@ interface WeixinNoticeResponse {
   }
 }
 
+type WeixinPaymentType = 'jsapi' | 'app' | 'h5' | 'native'
+
 export {
-  WeixinNoticeResponse
+  WeixinNoticeResponse,
+  WeixinPaymentType
 }
